@@ -6,14 +6,17 @@ import PropTypes from "prop-types";
 import { bindActionCreators } from "redux";
 import CourseList from "./CourseList";
 import { Redirect } from "react-router-dom";
+import SortableList from "./SortableList"
+import arrayMove from 'array-move';
 
 class CoursesPage extends React.Component {
   state = {
     redirectToAddCoursePage: false
   };
+  
 
   componentDidMount() {
-    const { courses, authors, actions } = this.props;
+    const { courses, actions } = this.props;
 
     if (courses.length === 0) {
       actions.loadCourses().catch(error => {
@@ -23,28 +26,34 @@ class CoursesPage extends React.Component {
 
   }
 
+  onSortEnd = ({oldIndex, newIndex}) => {
+    
+     console.log(this.props.courses)
+  };
+
   render() {
     return (
       <>
         {this.state.redirectToAddCoursePage && <Redirect to="/course" />}
         <h2>Courses</h2>
 
-        <button
+        {/* <button
           style={{ marginBottom: 20 }}
           className="btn btn-primary add-course"
           onClick={() => this.setState({ redirectToAddCoursePage: true })}
         >
           Add Course
-        </button>
+        </button> */}
 
         <CourseList courses={this.props.courses} />
+        <SortableList courses={this.props.courses} onSortEnd={this.onSortEnd} />
       </>
     );
   }
 }
 
 CoursesPage.propTypes = {
-  authors: PropTypes.array.isRequired,
+  // authors: PropTypes.array.isRequired,
   courses: PropTypes.array.isRequired,
   actions: PropTypes.object.isRequired
 };
