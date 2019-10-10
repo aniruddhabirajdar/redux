@@ -45,7 +45,10 @@ class CoursesPage extends React.Component {
           Add Course
         </button> */}
 
-        <CourseList courses={this.props.courses} />
+        {/* <CourseList courses={this.props.courses} /> */}
+        
+ 
+
         <SortableList courses={this.props.courses} onSortEnd={this.onSortEnd} />
       </>
     );
